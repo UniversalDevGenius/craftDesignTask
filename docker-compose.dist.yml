@@ -1,0 +1,21 @@
+services:
+  app:
+    image: refund-status-demo-pro-plus:latest
+    ports:
+      - "8080:80"
+      - "8000:8000"
+    environment:
+      - ALLOW_ORIGINS=*
+      - IRS_TIMEOUT_MS=500
+      - IRS_5XX_RATE=0.1
+      - IRS_429_RATE=0.1
+      - IRS_HEALTH=degraded
+      - POSTGRES_DSN=sqlite:///app/app/data/app.db
+      - SQLITE_PATH=/app/app/data/app.db
+      - HASH_SALT=demo-salt
+    volumes:
+      - app_data:/app/app/data
+    restart: unless-stopped
+
+volumes:
+  app_data:
